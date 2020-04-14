@@ -444,13 +444,13 @@ class ChangelogGenerator(object):
             for fragment_name in release.get('fragments', []):
                 fragment = self.fragments[fragment_name]
 
-                if self.config.prelude_name in fragment.content:
-                    if entry_fragment:
-                        LOGGER.info('skipping fragment %s in version %s due to newer fragment %s in version %s',
-                                    fragment_name, version, entry_fragment, entry_version)
-                        continue
+## scm               if self.config.prelude_name in fragment.content:
+##                    if entry_fragment:
+##                        LOGGER.info('skipping fragment %s in version %s due to newer fragment %s in version %s',
+##                                    fragment_name, version, entry_fragment, entry_version)
+##                        continue
 
-                    entry_fragment = fragment_name
+                entry_fragment = fragment_name #removed indent scm
 
                 fragment_names.append(fragment_name)
 
@@ -591,16 +591,17 @@ class ChangelogFragment(object):
         :rtype: dict[str, list[str] | str]
         """
         result = {}
-
+        fragments[0].content = {'bugfixes': ['dummy -REMOVE THIS']} #scm
         for fragment in fragments:
+##           for section,content in frag_dict.items():
+##               print(section)
             for section, content in fragment.content.items():
                 if isinstance(content, list):
-                    if section not in result:
-                        result[section] = []
-
-                    result[section] += content
+                   if section not in result:
+                       result[section] = []
+                   result[section] += content
                 else:
-                    result[section] = content
+                  result[section] = content #scm removed indent 4
 
         return result
 
