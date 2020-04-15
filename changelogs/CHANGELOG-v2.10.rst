@@ -1,0 +1,232 @@
+==================================================
+Ansible 2.10 "When the Levee Breaks" Release Notes
+==================================================
+
+.. contents:: Topics
+
+
+v2.10.0.dev0
+============
+
+Minor Changes
+-------------
+
+- Add information about changed packages in homebrew returned facts (https://github.com/ansible/ansible/issues/59376).
+- Follow up changes in homebrew_cask (https://github.com/ansible/ansible/issues/34696).
+- Moved OpenStack dynamic inventory script to Openstack Collection.
+- Remove redundant encoding in json.load call in ipa module_utils (https://github.com/ansible/ansible/issues/66592).
+- database - add support to unique indexes in postgresql_idx
+- docker connection plugin - run Powershell modules on Windows containers.
+- docker_container - add ``cpus`` option (https://github.com/ansible/ansible/issues/34320).
+- docker_container - add new ``container_default_behavior`` option (PR https://github.com/ansible/ansible/pull/63419).
+- docker_container - allow to configure timeout when the module waits for a container's removal.
+- docker_container - only passes anonymous volumes to docker daemon as ``Volumes``. This increases compatibility with the ``docker`` CLI program. Note that if you specify ``volumes: strict`` in ``comparisons``, this could cause existing containers created with docker_container from Ansible 2.9 or earlier to restart.
+- docker_container - support for port ranges was adjusted to be more compatible to the ``docker`` command line utility: a one-port container range combined with a multiple-port host range will no longer result in only the first host port be used, but the whole range being passed to Docker so that a free port in that range will be used.
+- docker_container.py - update a containers restart_policy without restarting the container (https://github.com/ansible/ansible/issues/65993)
+- docker_stack - Added ``stdout``, ``stderr``, and ``rc`` to return values.
+- docker_swarm_service - Sort lists when checking for changes.
+- gitlab_project_variable - implement masked and protected attributes
+- homebrew - Added environment variable to honor update_homebrew setting (https://github.com/ansible/ansible/issues/56650).
+- homebrew - New option ``upgrade_options`` allows to pass flags to upgrade
+- homebrew - ``install_options`` is now validated to be a list of strings.
+- homebrew_tap - ``name`` is now validated to be a list of strings.
+- idrac_redfish_config - Support for multiple manager attributes configuration
+- jira - added search function with support for Jira JQL (https://github.com/ansible-collections/community.general/pull/22).
+- jira - added update function which can update Jira Selects etc (https://github.com/ansible-collections/community.general/pull/22).
+- mysql_db - add ``master_data`` parameter (https://github.com/ansible/ansible/pull/66048).
+- mysql_db - add ``skip_lock_tables`` option (https://github.com/ansible/ansible/pull/66688).
+- mysql_db - add the ``dump_extra_args`` parameter (https://github.com/ansible/ansible/pull/67747).
+- mysql_db - add the ``executed_commands`` returned value (https://github.com/ansible/ansible/pull/65498).
+- mysql_db - add the ``force`` parameter (https://github.com/ansible/ansible/pull/65547).
+- mysql_info - add ``exclude_fields`` parameter (https://github.com/ansible/ansible/issues/63319).
+- mysql_info - add ``global_status`` filter parameter option and return (https://github.com/ansible/ansible/pull/63189).
+- mysql_info - add ``return_empty_dbs`` parameter to list empty databases (https://github.com/ansible/ansible/issues/65727).
+- mysql_replication - add ``channel`` parameter (https://github.com/ansible/ansible/issues/29311).
+- mysql_replication - add ``connection_name`` parameter (https://github.com/ansible/ansible/issues/46243).
+- mysql_replication - add ``fail_on_error`` parameter (https://github.com/ansible/ansible/pull/66252).
+- mysql_replication - add ``master_delay`` parameter (https://github.com/ansible/ansible/issues/51326).
+- mysql_replication - add ``master_use_gtid`` parameter (https://github.com/ansible/ansible/pull/62648).
+- mysql_replication - add ``queries`` return value (https://github.com/ansible/ansible/pull/63036).
+- mysql_replication - add support of ``resetmaster`` choice to ``mode`` parameter (https://github.com/ansible/ansible/issues/42870).
+- mysql_user - ``priv`` parameter can be string or dictionary (https://github.com/ansible/ansible/issues/57533).
+- mysql_user - add ``plugin_auth_string`` parameter (https://github.com/ansible/ansible/pull/44267).
+- mysql_user - add ``plugin_hash_string`` parameter (https://github.com/ansible/ansible/pull/44267).
+- mysql_user - add ``plugin`` parameter (https://github.com/ansible/ansible/pull/44267).
+- mysql_user - add the resource_limits parameter (https://github.com/ansible-collections/community.general/issues/133).
+- mysql_variables - add ``mode`` parameter (https://github.com/ansible/ansible/issues/60119).
+- nagios module - a start parameter has been added, allowing the time a Nagios outage starts to be set. It defaults to the current time if not provided, preserving the previous behavior and ensuring compatibility with existing playbooks.
+- nsupdate - Use provided TSIG key to not only sign update queries but also lookup queries
+- postgresql_db - add ``dump_extra_args`` parameter (https://github.com/ansible/ansible/pull/66717).
+- postgresql_db - add support for .pgc file format for dump and restores.
+- postgresql_db - add the ``executed_commands`` returned value (https://github.com/ansible/ansible/pull/65542).
+- postgresql_ext - use query parameters with cursor object (https://github.com/ansible/ansible/pull/64994).
+- postgresql_info - add collecting info about logical replication publications in databases (https://github.com/ansible/ansible/pull/67614).
+- postgresql_info - add collection info about replication subscriptions (https://github.com/ansible/ansible/pull/67464).
+- postgresql_lang - add ``owner`` parameter (https://github.com/ansible/ansible/pull/62999).
+- postgresql_membership - add the ``trust_input`` parameter (https://github.com/ansible-collections/community.general/pull/158).
+- postgresql_privs - add support for TYPE as object types in postgresql_privs module (https://github.com/ansible/ansible/issues/62432).
+- postgresql_query - add the ``encoding`` parameter (https://github.com/ansible/ansible/issues/65367).
+- postgresql_user - add the ``trust_input`` parameter (https://github.com/ansible-collections/community.general/pull/116).
+- postgresql_user - add the comment parameter (https://github.com/ansible/ansible/pull/66711).
+- redfish_config - New ``bios_attributes`` option to allow setting multiple BIOS attributes in one command.
+- redfish_config, redfish_command - Add ``resource_id`` option to specify which System, Manager, or Chassis resource to modify.
+- rundeck modules - added new options ``client_cert``, ``client_key``, ``force``, ``force_basic_auth``, ``http_agent``, ``url_password``, ``url_username``, ``use_proxy``, ``validate_certs`` to allow changing fetch_url parameters.
+- ufw - accept ``interface_in`` and ``interface_out`` as parameters.
+- zabbix_action - allow str values for ``esc_period`` options (https://github.com/ansible/ansible/pull/66841).
+- zabbix_host - now supports configuring user macros and host tags on the managed host (see https://github.com/ansible/ansible/pull/66777)
+- zabbix_host_info - ``host_name`` based search results now include host groups.
+- zabbix_hostmacro - ``macro_name`` now accepts macros in zabbix native format as well (e.g. ``{$MACRO}``)
+- zabbix_hostmacro - ``macro_value`` is no longer required when ``state=absent``
+- zabbix_proxy - ``interface`` sub-options ``type`` and ``main`` are now deprecated and will be removed in Ansible 2.14. Also, the values passed to ``interface`` are now checked for correct types and unexpected keys.
+- zabbix_proxy - added option proxy_address for comma-delimited list of IP/CIDR addresses or DNS names to accept active proxy requests from
+- zabbix_template - add new option omit_date to remove date from exported/dumped template (https://github.com/ansible/ansible/pull/67302)
+- zabbix_template - adding new update rule templateLinkage.deleteMissing for newer zabbix versions (https://github.com/ansible/ansible/pull/66747).
+- zabbix_template_info - add new option omit_date to remove date from exported/dumped template (https://github.com/ansible/ansible/pull/67302)
+
+Deprecated Features
+-------------------
+
+- clc_aa_policy - The ``wait`` option had no effect and will be removed in Ansible 2.14
+- docker_container - the ``trust_image_content`` option is now deprecated and will be removed in Ansible 2.14. It has never been used by the module.
+- docker_container - the default of ``container_default_behavior`` will change from ``compatibility`` to ``no_defaults`` in Ansible 2.14. Set the option to an explicit value to avoid a deprecation warning.
+- docker_container - the default value for ``network_mode`` will change in Ansible 2.14, provided at least one network is specified and ``networks_cli_compatible`` is ``true``. See porting guide, module documentation or deprecation warning for more details.
+- docker_stack - Return values ``out`` and ``err`` have been deprecated and will be removed in Ansible 2.14. Use ``stdout`` and ``stderr`` instead.
+- redfish_config - Deprecate ``bios_attribute_name`` and ``bios_attribute_value`` in favor of new `bios_attributes`` option.
+- redfish_config, redfish_command - Behavior to modify the first System, Mananger, or Chassis resource when multiple are present is deprecated. Use the new ``resource_id`` option to specify target resource to modify.
+
+Removed Features (previously deprecated)
+----------------------------------------
+
+- core - remove support for ``check_invalid_arguments`` in ``UTMModule``.
+- ldap_attr, ldap_entry - The ``params`` option has been removed in Ansible-2.10 as it circumvents Ansible's option handling.  Setting ``bind_pw`` with the ``params`` option was disallowed in Ansible-2.7, 2.8, and 2.9 as it was insecure.  For information about this policy, see the discussion at: https://meetbot.fedoraproject.org/ansible-meeting/2017-09-28/ansible_dev_meeting.2017-09-28-15.00.log.html This fixes CVE-2020-1746
+- pacman - Removed deprecated ``recurse`` option, use ``extra_args=--recursive`` instead
+
+Bugfixes
+--------
+
+- **SECURITY** - CVE-2019-14904 - solaris_zone module accepts zone name and performs actions related to that. However, there is no user input validation done while performing actions. A malicious user could provide a crafted zone name which allows executing commands into the server manipulating the module behaviour. Adding user input validation as per Solaris Zone documentation fixes this issue.
+- **security issue** - Ansible: Splunk and Sumologic callback plugins leak sensitive data in logs (CVE-2019-14864)
+- Add validate_certs in rhn_channel module (https://github.com/ansible/ansible/issues/68374).
+- Fix GitLab modules authentication by handling `python-gitlab` library version >= 1.13.0 (https://github.com/ansible/ansible/issues/64770)
+- Fix SSL protocol references in the ``mqtt`` module to prevent failures on Python 2.6.
+- Fix the ``xml`` module to use ``list(elem)`` instead of ``elem.getchildren()`` since it is being removed in Python 3.9
+- Fix to return XML as a string even for python3 (https://github.com/ansible/ansible/pull/64032).
+- Fixes the url handling in lxd_container module that url cannot be specified in lxd environment created by snap.
+- Fixes the url handling in lxd_profile module that url cannot be specified in lxd environment created by snap.
+- Redact GitLab Project variables which might include sensetive information such as password, api_keys and other project related details.
+- Run command in absent state in atomic_image module.
+- While deleting gitlab user, name, email and password is no longer required ini gitlab_user module (https://github.com/ansible/ansible/issues/61921).
+- become - Fix various plugins that still used play_context to get the become password instead of through the plugin - https://github.com/ansible/ansible/issues/62367
+- cronvar - only run ``get_bin_path()`` once
+- cronvar - use correct binary name (https://github.com/ansible/ansible/issues/63274)
+- cronvar - use get_bin_path utility to locate the default crontab executable instead of the hardcoded /usr/bin/crontab. (https://github.com/ansible/ansible/pull/59765)
+- cyberarkpassword - fix invalid attribute access (https://github.com/ansible/ansible/issues/66268)
+- dense callback - fix plugin access to its configuration variables and remove a warning message (https://github.com/ansible/ansible/issues/64628).
+- digital_ocean_droplet - Fix creation of DigitalOcean droplets using digital_ocean_droplet module (https://github.com/ansible/ansible/pull/61655)
+- docker connection plugin - do not prefix remote path if running on Windows containers.
+- docker_compose - fix issue where docker deprecation warning results in ansible erroneously reporting a failure
+- docker_container - fix idempotency for IP addresses for networks. The old implementation checked the effective IP addresses assigned by the Docker daemon, and not the specified ones. This causes idempotency issues for containers which are not running, since they have no effective IP addresses assigned.
+- docker_container - fix network idempotence comparison error.
+- docker_container - improve error behavior when parsing port ranges fails.
+- docker_container - make sure that when image is missing, check mode indicates a change (image will be pulled).
+- docker_container - passing ``test: [NONE]`` now actually disables the image's healthcheck, as documented.
+- docker_container - wait for removal of container if docker API returns early (https://github.com/ansible/ansible/issues/65811).
+- docker_image - fix validation of build options.
+- docker_image - improve file handling when loading images from disk.
+- docker_image - make sure that deprecated options also emit proper deprecation warnings next to warnings which indicate how to replace them.
+- docker_login - Use ``with`` statement when accessing files, to prevent that invalid JSON output is produced.
+- docker_login - correct broken fix for https://github.com/ansible/ansible/pull/60381 which crashes for Python 3.
+- docker_login - fix error handling when ``username`` or ``password`` is not specified when ``state`` is ``present``.
+- docker_login - make sure that ``~/.docker/config.json`` is created with permissions ``0600``.
+- docker_network - fix idempotence comparison error.
+- docker_network - fix idempotency for multiple IPAM configs of the same IP version (https://github.com/ansible/ansible/issues/65815).
+- docker_network - validate IPAM config subnet CIDR notation on module setup and not during idempotence checking.
+- docker_node_info - improve error handling when service inspection fails, for example because node name being ambiguous (https://github.com/ansible/ansible/issues/63353, PR https://github.com/ansible/ansible/pull/63418).
+- docker_swarm_service - ``source`` must no longer be specified for ``tmpfs`` mounts.
+- docker_swarm_service - fix task always reporting as changed when using ``healthcheck.start_period``.
+- docker_swarm_service - passing ``test: [NONE]`` now actually disables the image's healthcheck, as documented.
+- dummy -REMOVE THIS
+- firewalld - enable the firewalld module to function offline with firewalld version 0.7.0 and newer (https://github.com/ansible/ansible/issues/63254)
+- github_deploy_key - added support for pagination
+- gitlab_user - Fix adding ssh key to new/changed user and adding group membership for new/changed user
+- hashi_vault - Fix KV v2 lookup to always return latest version
+- homebrew - fix Homebrew module's some functions ignored check_mode option (https://github.com/ansible/ansible/pull/65387).
+- influxdb_user - Don't grant admin privilege in check mode
+- intersight_rest_api, intersight_info - improve file handling by using a context manager.
+- jira - printing full error message from jira server (https://github.com/ansible-collections/community.general/pull/22).
+- jira - transition issue not working (https://github.com/ansible-collections/community.general/issues/109).
+- mysql - dont mask ``mysql_connect`` function errors from modules (https://github.com/ansible/ansible/issues/64560).
+- mysql_db - fix bug in the ``db_import`` function introduced by https://github.com/ansible/ansible/pull/56721 (https://github.com/ansible/ansible/issues/65351).
+- mysql_info - add parameter for __collect to get only what are wanted (https://github.com/ansible-collections/community.general/pull/136).
+- mysql_replication - allow to pass empty values to parameters (https://github.com/ansible/ansible/issues/23976).
+- mysql_user - Fix idempotence when long grant lists are used (https://github.com/ansible/ansible/issues/68044)
+- mysql_user - Remove false positive ``no_log`` warning for ``update_password`` option
+- mysql_user - fix support privileges with underscore (https://github.com/ansible/ansible/issues/66974).
+- mysql_user - make sure current_pass_hash is a string before using it in comparison (https://github.com/ansible/ansible/issues/60567).
+- mysql_variable - fix the module doesn't support variables name with dot (https://github.com/ansible/ansible/issues/54239).
+- nsupdate - Do not try fixing non-existing TXT values (https://github.com/ansible/ansible/issues/63364)
+- nsupdate - Fix zone name lookup of internal/private zones (https://github.com/ansible/ansible/issues/62052)
+- one_vm - improve file handling by using a context manager.
+- ovirt - don't ignore ``instance_cpus`` parameter
+- pacman - Fix pacman output parsing on localized environment. (https://github.com/ansible/ansible/issues/65237)
+- pacman - fix module crash with ``IndexError: list index out of range`` (https://github.com/ansible/ansible/issues/63077)
+- pamd - Bugfix for attribute error when removing the first or last line
+- passwordstore lookup - Honor equal sign in userpass
+- pmrun plugin - The success_command string was no longer quoted. This caused unusual use-cases like ``become_flags=su - root -c`` to fail.
+- postgres - use query params with cursor.execute in module_utils.postgres.PgMembership class (https://github.com/ansible/ansible/pull/65164).
+- postgres.py - add a new keyword argument ``query_params`` (https://github.com/ansible/ansible/pull/64661).
+- postgres_user - Remove false positive ``no_log`` warning for ``no_password_changes`` option
+- postgresql_db - Removed exception for 'LibraryError' (https://github.com/ansible/ansible/issues/65223).
+- postgresql_db - allow to pass users names which contain dots (https://github.com/ansible/ansible/issues/63204).
+- postgresql_idx.py - use the ``query_params`` arg of exec_sql function (https://github.com/ansible/ansible/pull/64661).
+- postgresql_lang - use query params with cursor.execute (https://github.com/ansible/ansible/pull/65093).
+- postgresql_membership - make the ``groups`` and ``target_roles`` parameters required (https://github.com/ansible/ansible/pull/67046).
+- postgresql_membership - remove unused import of exec_sql function (https://github.com/ansible-collections/community.general/pull/178).
+- postgresql_owner - use query_params with cursor object (https://github.com/ansible/ansible/pull/65310).
+- postgresql_privs - fix sorting lists with None elements for python3 (https://github.com/ansible/ansible/issues/65761).
+- postgresql_privs - sort results before comparing so that the values are compared and not the result of ``.sort()`` (https://github.com/ansible/ansible/pull/65125)
+- postgresql_privs.py - fix reports as changed behavior of module when using ``type=default_privs`` (https://github.com/ansible/ansible/issues/64371).
+- postgresql_publication - fix typo in module.warn method name (https://github.com/ansible/ansible/issues/64582).
+- postgresql_publication - use query params arg with cursor object (https://github.com/ansible/ansible/issues/65404).
+- postgresql_query - improve file handling by using a context manager.
+- postgresql_query - the module doesn't support non-ASCII characters in SQL files with Python3 (https://github.com/ansible/ansible/issues/65367).
+- postgresql_schema - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65679).
+- postgresql_sequence - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65787).
+- postgresql_set - fix converting value to uppercase (https://github.com/ansible/ansible/issues/67377).
+- postgresql_set - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65791).
+- postgresql_slot - make the ``name`` parameter required (https://github.com/ansible/ansible/pull/67046).
+- postgresql_slot - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65791).
+- postgresql_subscription - fix typo in module.warn method name (https://github.com/ansible/ansible/pull/64583).
+- postgresql_subscription - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65791).
+- postgresql_table - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65862).
+- postgresql_tablespace - make the ``tablespace`` parameter required (https://github.com/ansible/ansible/pull/67046).
+- postgresql_tablespace - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65862).
+- postgresql_user - allow to pass user name which contains dots (https://github.com/ansible/ansible/issues/63204).
+- postgresql_user - use query parameters with cursor object (https://github.com/ansible/ansible/pull/65862).
+- proxmox - fix version detection of proxmox 6 and up (Fixes https://github.com/ansible/ansible/issues/59164)
+- proxysql - fixed mysql dictcursor
+- pulp_repo - the ``client_cert`` and ``client_key`` options were used for both requests to the Pulp instance and for the repo to sync with, resulting in errors when they were used. Use the new options ``feed_client_cert`` and ``feed_client_key`` for client certificates that should only be used for repo synchronisation, and not for communication with the Pulp instance. (https://github.com/ansible/ansible/issues/59513)
+- puppet - fix command line construction for check mode and ``manifest:``
+- pure - fix incorrect user_string setting in module_utils file (https://github.com/ansible/ansible/pull/66914)
+- redfish_command - fix EnableAccount if Enabled property is not present in Account resource (https://github.com/ansible/ansible/issues/59822)
+- redfish_command - fix error when deleting a disabled Redfish account (https://github.com/ansible/ansible/issues/64684)
+- redfish_command - fix power ResetType mapping logic (https://github.com/ansible/ansible/issues/59804)
+- redfish_facts - fix KeyError exceptions in GetLogs (https://github.com/ansible/ansible/issues/59797)
+- redhat_subscription - do not set the default quantity to ``1`` when no quantity is provided (https://github.com/ansible/ansible/issues/66478)
+- replace use of deprecated functions from ``ansible.module_utils.basic``.
+- runas - Fix the ``runas`` ``become_pass`` variable fallback from ``ansible_runas_runas`` to ``ansible_runas_pass``
+- scaleway: use jsonify unmarshaller only for application/json requests to avoid breaking the multiline configuration with requests in text/plain (https://github.com/ansible/ansible/issues/65036)
+- scaleway_compute(check_image_id): use get image instead loop on first page of images results
+- spacewalk inventory - improve file handling by using a context manager.
+- syslogger callback plugin - remove check mode support since it did nothing anyway
+- terraform - adding support for absolute paths additionally to the relative path within project_path (https://github.com/ansible/ansible/issues/58578)
+- terraform - reset out and err before plan creation (https://github.com/ansible/ansible/issues/64369)
+- terraform module - fixes usage for providers not supporting workspaces
+- yarn - handle no version when installing module by name (https://github.com/ansible/ansible/issues/55097)
+- zabbix_action - arguments ``event_source`` and ``esc_period`` no longer required when ``state=absent``
+- zabbix_host - fixed inventory_mode key error, which occurs with Zabbix 4.4.1 or more (https://github.com/ansible/ansible/issues/65304).
+- zabbix_host - was not possible to update a host where visible_name was not set in zabbix
+- zabbix_mediatype - Fixed to support zabbix 4.4 or more and python3 (https://github.com/ansible/ansible/pull/67693)
+- zabbix_template - fixed error when providing empty ``link_templates`` to the module (see https://github.com/ansible/ansible/issues/66417)
+- zabbix_template - fixed invalid (non-importable) output provided by exporting XML (see https://github.com/ansible/ansible/issues/66466)
+- zabbix_user - Fixed an issue where module failed with zabbix 4.4 or above (see https://github.com/ansible/ansible/pull/67475)
